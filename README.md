@@ -14,28 +14,28 @@ User Stories
 
 
 1. Home Page Features
-● Search Bar – Search by campus, building, floor, or room number. Include filters for quiet
+- Search Bar – Search by campus, building, floor, or room number. Include filters for quiet
 level and available seating.
-● Campus Selector Dropdown – Allows students to choose between multiple campuses.
-● Quick Filter Buttons – Options like Available Now, Quiet, Low Crowd, Has Outlets, Good
+- Campus Selector Dropdown – Allows students to choose between multiple campuses.
+- Quick Filter Buttons – Options like Available Now, Quiet, Low Crowd, Has Outlets, Good
 Wi-Fi.
-● Live Crowd Level Cards – Display popular study spots with crowd level and last updated
+- Live Crowd Level Cards – Display popular study spots with crowd level and last updated
 time.
-● Report Button – Allows students to submit crowd level updates (Low / Medium / High)
+- Report Button – Allows students to submit crowd level updates (Low / Medium / High)
 with optional comments.
-● Login / Sign Up – Students must create an account to use the app. Profile icon shown
+- Login / Sign Up – Students must create an account to use the app. Profile icon shown
 after login.
  
 
 2.Additional Features to Consider
-● Study Spot Rating System – Students rate locations based on comfort, cleanliness, and
+- Study Spot Rating System – Students rate locations based on comfort, cleanliness, and
 noise level.
-● Time-Based Trends – Show typical busy or quiet hours using stored historical data.
-● Map View – Display campus map with color-coded pins (Green = Empty, Yellow =
+- Time-Based Trends – Show typical busy or quiet hours using stored historical data.
+- Map View – Display campus map with color-coded pins (Green = Empty, Yellow =
 Moderate, Red = Full).
-● Notifications – Alert users when a room becomes quiet or less crowded.
-● Favorite Spots – Allow users to save preferred study areas.
-● Admin Analytics Dashboard – Show peak hours, most used spots, and campus activity
+- Notifications – Alert users when a room becomes quiet or less crowded.
+- Favorite Spots – Allow users to save preferred study areas.
+- Admin Analytics Dashboard – Show peak hours, most used spots, and campus activity
 statistics.
-● Report Incorrect Info – Users can flag outdated or inaccurate reports.
-● Auto-Expire Reports – Crowd updates automatically expire after 30–60 minutes.
+- Report Incorrect Info – Users can flag outdated or inaccurate reports.
+- Auto-Expire Reports – Crowd updates automatically expire after 30–60 minutes.
