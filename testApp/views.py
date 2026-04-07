@@ -8,7 +8,7 @@ from .models import Member
 # Create your views here.
 # defines methods for each url pattern
 def homePage(request):
-  template = loader.get_template('homepage.html')
+  template = loader.get_template('homePage.html')
   return HttpResponse(template.render())
 
 def about(request):
