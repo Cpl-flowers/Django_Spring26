@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Spot Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-orange-500 shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-orange-700 px-6 py-3 rounded-lg shadow-md">
+                    <h1 class="text-white text-3xl font-extrabold tracking-wider">UTRGV</h1>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-green-800">Study Room Finder</h2>
+                    <p class="text-gray-100 text-sm">Find your perfect study space</p>
+                </div>
+            </div>
+            <div>
+                <a href="{% url 'login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">Login</a>
+                <a href="{% url 'signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500 ml-2">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input type="text" placeholder="Search by campus, building, floor, or room..."
+                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-orange-500"/>
+        </div>
+
+        <!-- Campus Selector -->
+        <div class="mb-6 relative w-64">
+            <label class="block text-green-800 mb-2 font-medium">Select Campus</label>
+            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 cursor-pointer appearance-none">
+                <option>All Campuses</option>
+                <option>Edinburg</option>
+                <option>Harlingen</option>
+                <option>Brownsville</option>
+            </select>
+            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">▼</span>
+        </div>
+
+        <!-- Quick Filters -->
+        <div class="flex flex-wrap gap-3 mb-8">
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Available Now</button>
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Quiet</button>
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Low Crowd</button>
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Good Wi-Fi</button>
+        </div>
+
+        <!-- Study Rooms Grid -->
+        <h3 class="text-2xl text-green-800 font-semibold mb-4">Available Study Spaces</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for building in buildings %}
+                <div class="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-orange-500 transition p-4">
+                    <h4 class="text-xl font-bold text-green-700">{{ building.name }}</h4>
+                    <p class="text-gray-600">{{ building.campus }} • {{ building.floor_count }} floors</p>
+                    <!-- Placeholder for extra info -->
+                    <p class="mt-2 text-gray-500">Room: 101</p>
+                    <p class="mt-1 text-gray-500">Quiet Level: Moderate</p>
+                    <p class="mt-1 text-gray-500">Seating: 12</p>
+                    <p class="mt-1 text-gray-500">Outlets: Yes | Wi-Fi: Yes</p>
+                    <p class="mt-1 text-gray-500">Crowd: <span class="font-bold text-green-500">Low</span></p>
+                    <p class="mt-1 text-gray-400 text-sm">Last updated: 5 min ago</p>
+                    <button class="mt-4 w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Reserve Room</button>
+                </div>
+            {% empty %}
+                <p class="text-gray-500 col-span-full">No buildings added yet.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+</body>
+</html>
