@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
+
+# use to turn on the virtual enviroment source virt/Scripts/activate
 """
 
 from pathlib import Path
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'testApp'
+    # 'members'
 ]
 
 MIDDLEWARE = [
