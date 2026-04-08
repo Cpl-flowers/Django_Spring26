@@ -6,20 +6,15 @@ from .models import Building, Member
 
 def home(request):
     buildings = Building.objects.all()
-    return render(request, 'testApp/home.html', {'buildings': buildings})
+    return render(request, 'home.html', {'buildings': buildings})
 
 
 def login_view(request):
-    return render(request, 'testApp/login.html')
+    return render(request, 'login.html')
 
 
 def signup_view(request):
-    return render(request, 'testApp/login.html')
-
-
-def homePage(request):
-    template = loader.get_template('homePage.html')
-    return HttpResponse(template.render())
+    return render(request, '.html')
 
 
 def about(request):

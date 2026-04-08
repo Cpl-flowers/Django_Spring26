@@ -23,12 +23,12 @@ from studyroom import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('homePage/', views.homePage, name='Home'),
-    path('homePage/contact/', views.members, name='HomeContact'),
+    path('', views.home, name='Home'),
+    path('home/', views.home, name='Home'),
+    path('home/contact/', views.members, name='HomeContact'),
     path('about/', views.about, name='About'),
     path('contact/', views.members, name='Contact'),
     path('contact/details/<int:id>', views.details, name='Details'),
-    path('login/', views.login_view, name='login'),
-    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='Login'),
+    path('signup/', views.signup_view, name='Signup'),
 ]
