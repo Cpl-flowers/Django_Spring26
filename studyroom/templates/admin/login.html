@@ -1,0 +1,14 @@
+{% extends "master.html" %}
+
+{% block title %}Admin Login - Study Crowd{% endblock %}
+
+{% block content %}
+<h1>Admin Login</h1>
+<p>Please log in to access the admin panel.</p>
+<form method="post" action="{% url 'admin:login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+<p>Back to <a href="{% url 'Login' %}">user login</a>.</p>
+{% endblock %}

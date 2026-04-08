@@ -5,5 +5,10 @@
 {% block content %}
 <h1>Login</h1>
 <p>Please log in to access your account.</p>
-<!-- Add your login form here -->
+<form method="post" action="{% url 'Login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+<p>For admin access, <a href="/admin/">click here to go to admin login</a>.</p>
 {% endblock %}

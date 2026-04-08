@@ -19,6 +19,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.views import LoginView
 from studyroom import views
 
 urlpatterns = [
@@ -29,6 +30,6 @@ urlpatterns = [
     path('about/', views.about, name='About'),
     path('contact/', views.members, name='Contact'),
     path('contact/details/<int:id>', views.details, name='Details'),
-    path('login/', views.login_view, name='Login'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='Login'),
     path('signup/', views.signup_view, name='Signup'),
 ]
