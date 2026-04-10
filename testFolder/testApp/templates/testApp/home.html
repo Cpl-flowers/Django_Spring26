@@ -1,97 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Study Room Finder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-        }
+{% extends 'testApp/base.html' %}
 
-        .navbar {
-            background: white;
-            border-bottom: 4px solid orange;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+{% block title %}Study Room Finder{% endblock %}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+{% block body_class %}home-page{% endblock %}
 
-        .logo-box {
-            background: #f97316;
-            color: white;
-            font-weight: bold;
-            font-size: 32px;
-            padding: 18px 28px;
-            border-radius: 14px;
-        }
-
-        .brand-text h1 {
-            margin: 0;
-            font-size: 20px;
-        }
-
-        .brand-text p {
-            margin: 4px 0 0;
-            color: #555;
-        }
-
-        .nav-buttons a,
-        .nav-buttons button {
-            margin-left: 12px;
-            padding: 12px 22px;
-            border-radius: 10px;
-            font-size: 16px;
-            text-decoration: none;
-            border: 2px solid #f97316;
-            cursor: pointer;
-        }
-
-        .login-btn {
-            background: #f97316;
-            color: white;
-        }
-
-        .signup-btn {
-            background: white;
-            color: #f97316;
-        }
-
-        .logout-btn {
-            background: white;
-            color: #f97316;
-        }
-
-        .hero {
-            padding: 40px;
-        }
-
-        .search-box {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 18px;
-            font-size: 18px;
-            border-radius: 12px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <div class="navbar">
+{% block page_shell %}
+    <header class="topbar home-topbar">
         <div class="brand">
             <div class="logo-box">UTRGV</div>
             <div class="brand-text">
@@ -102,22 +16,66 @@
 
         <div class="nav-buttons">
             {% if user.is_authenticated %}
-                <span>Hello, {{ user.username }}</span>
-                <form action="/accounts/logout/" method="post" style="display:inline;">
+                <span class="welcome-text">Hello, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
                     {% csrf_token %}
-                    <button type="submit" class="logout-btn">Logout</button>
+                    <button type="submit" class="nav-btn logout-btn">Logout</button>
                 </form>
             {% else %}
-                <a href="/accounts/login/" class="login-btn">Login</a>
-                <a href="/signup/" class="signup-btn">Sign Up</a>
+                <a href="{% url 'login' %}" class="nav-btn login-btn">Login</a>
+                <a href="{% url 'signup' %}" class="nav-btn signup-btn">Sign Up</a>
             {% endif %}
         </div>
-    </div>
+    </header>
 
-    <div class="hero">
-        <div class="search-box">
-            <input type="text" placeholder="Search by campus, building, floor, or room number...">
-        </div>
-    </div>
-</body>
-</html>
+    <div class="page-top-accent"></div>
+
+    <main class="home-shell">
+        <section class="home-controls">
+            <form class="home-search" action="#" method="get">
+                <input type="text" placeholder="Search by campus, building, floor, or room..." aria-label="Search study spaces">
+            </form>
+
+            <div class="campus-section">
+                <label for="campus">Select Campus</label>
+                <div class="select-wrap">
+                    <select id="campus" class="campus-select">
+                        <option>All Campuses</option>
+                        <option>Edinburg</option>
+                        <option>Harlingen</option>
+                        <option>Brownsville</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filters">
+                <button type="button" class="filter-btn">Available Now</button>
+                <button type="button" class="filter-btn">Quiet</button>
+                <button type="button" class="filter-btn">Low Crowd</button>
+                <button type="button" class="filter-btn">Good Wi-Fi</button>
+            </div>
+        </section>
+
+        <section class="study-spaces">
+            <h2 class="section-title">Available Study Spaces</h2>
+
+            <div class="building-grid">
+                {% for building in buildings %}
+                    <article class="building-card">
+                        <h3>{{ building.name }}</h3>
+                        <p class="building-meta">{{ building.campus }} &bull; {{ building.floor_count }} floors</p>
+                        <p>Room: 101</p>
+                        <p>Quiet Level: Moderate</p>
+                        <p>Seating: 12</p>
+                        <p>Outlets: Yes | Wi-Fi: Yes</p>
+                        <p>Crowd: <span class="crowd-low">Low</span></p>
+                        <p class="last-updated">Last updated: 5 min ago</p>
+                        <button type="button" class="reserve-btn">Reserve Room</button>
+                    </article>
+                {% empty %}
+                    <p class="empty-text">No buildings added yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

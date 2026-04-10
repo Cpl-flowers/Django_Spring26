@@ -7,21 +7,23 @@
     <title>{% block title %}Study Room Finder{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'testApp/css/style.css' %}">
 </head>
-<body>
-    <div class="topbar">
-        <div class="brand">
-            <div class="logo-box">UTRGV</div>
-            <div class="brand-text">
-                <h1>Study Room Finder</h1>
-                <p>Find your perfect study space</p>
+<body class="{% block body_class %}auth-page{% endblock %}">
+    {% block page_shell %}
+        <div class="topbar">
+            <div class="brand">
+                <div class="logo-box">UTRGV</div>
+                <div class="brand-text">
+                    <h1>Study Room Finder</h1>
+                    <p>Find your perfect study space</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="auth-wrapper">
-        <div class="auth-card">
-            {% block content %}{% endblock %}
+        <div class="auth-wrapper">
+            <div class="auth-card">
+                {% block content %}{% endblock %}
+            </div>
         </div>
-    </div>
+    {% endblock %}
 </body>
 </html>
