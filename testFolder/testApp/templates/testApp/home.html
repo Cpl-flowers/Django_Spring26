@@ -1,0 +1,86 @@
+{% extends 'testApp/base.html' %}
+
+{% block title %}Study Room Finder{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block page_shell %}
+    <header class="topbar home-topbar">
+        <div class="brand">
+            <div class="logo-box">UTRGV</div>
+            <div class="brand-text">
+                <h1>Study Room Finder</h1>
+                <p>Find your perfect study space</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            {% if user.is_authenticated %}
+                <span class="welcome-text">Hello, {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-btn logout-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-btn login-btn">Login</a>
+                <a href="{% url 'signup' %}" class="nav-btn signup-btn">Sign Up</a>
+                <a href="{% url 'Home' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Home</a>
+                <a href="{% url 'About' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">About</a>
+                <a href="{% url 'Contact' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Contact</a>
+                <a href="{% url 'Login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">Login</a>
+                <a href="{% url 'Signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500 ml-2">Sign Up</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="page-top-accent"></div>
+
+    <main class="home-shell">
+        <section class="home-controls">
+            <form class="home-search" action="#" method="get">
+                <input type="text" placeholder="Search by campus, building, floor, or room..." aria-label="Search study spaces">
+            </form>
+
+            <div class="campus-section">
+                <label for="campus">Select Campus</label>
+                <div class="select-wrap">
+                    <select id="campus" class="campus-select">
+                        <option>All Campuses</option>
+                        <option>Edinburg</option>
+                        <option>Harlingen</option>
+                        <option>Brownsville</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filters">
+                <button type="button" class="filter-btn">Available Now</button>
+                <button type="button" class="filter-btn">Quiet</button>
+                <button type="button" class="filter-btn">Low Crowd</button>
+                <button type="button" class="filter-btn">Good Wi-Fi</button>
+            </div>
+        </section>
+
+        <section class="study-spaces">
+            <h2 class="section-title">Available Study Spaces</h2>
+
+            <div class="building-grid">
+                {% for building in buildings %}
+                    <article class="building-card">
+                        <h3>{{ building.name }}</h3>
+                        <p class="building-meta">{{ building.campus }} &bull; {{ building.floor_count }} floors</p>
+                        <p>Room: 101</p>
+                        <p>Quiet Level: Moderate</p>
+                        <p>Seating: 12</p>
+                        <p>Outlets: Yes | Wi-Fi: Yes</p>
+                        <p>Crowd: <span class="crowd-low">Low</span></p>
+                        <p class="last-updated">Last updated: 5 min ago</p>
+                        <button type="button" class="reserve-btn">Reserve Room</button>
+                    </article>
+                {% empty %}
+                    <p class="empty-text">No buildings added yet.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
