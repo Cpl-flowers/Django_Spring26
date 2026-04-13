@@ -1,6 +1,6 @@
-{% extends "master.html" %}
+{% extends 'testApp/base.html' %}
 
-{% block title %}{{ mymember.firstname }} {{ mymember.lastname }} - Study Crowd{% endblock %}
+{% block title %}{{ mymember.firstname }} {{ mymember.lastname }} - Study Room Finder{% endblock %}
 
 {% block content %}
 <h1>{{ mymember.firstname }} {{ mymember.lastname }}</h1>

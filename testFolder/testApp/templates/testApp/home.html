@@ -17,18 +17,16 @@
         <div class="nav-buttons">
             {% if user.is_authenticated %}
                 <span class="welcome-text">Hello, {{ user.username }}</span>
-                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                <form action="{% url 'Logout' %}" method="post" class="logout-form">
                     {% csrf_token %}
                     <button type="submit" class="nav-btn logout-btn">Logout</button>
                 </form>
             {% else %}
-                <a href="{% url 'login' %}" class="nav-btn login-btn">Login</a>
-                <a href="{% url 'signup' %}" class="nav-btn signup-btn">Sign Up</a>
+                #<a href="{% url 'Login' %}" class="nav-btn login-btn">Login</a>
+                #<a href="{% url 'Signup' %}" class="nav-btn signup-btn">Sign Up</a>
                 <a href="{% url 'Home' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Home</a>
                 <a href="{% url 'About' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">About</a>
                 <a href="{% url 'Contact' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Contact</a>
-                <a href="{% url 'Login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">Login</a>
-                <a href="{% url 'Signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500 ml-2">Sign Up</a>
             {% endif %}
         </div>
     </header>
