@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservation Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow text-center">
+
+    <h1 class="text-3xl font-bold text-green-700 mb-4">
+        Reservation Confirmed 🎉
+    </h1>
+
+    <p class="text-gray-600 mb-2">
+        Room: {{ room.number }}
+    </p>
+
+    <p class="text-gray-600 mb-2">
+        Start: {{ start }}:00
+    </p>
+
+    <p class="text-gray-600 mb-6">
+        End: {{ end }}:00
+    </p>
+
+    <a href="{% url 'home' %}"
+       class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">
+        Back Home
+    </a>
+
+</div>
+
+</body>
+</html>
