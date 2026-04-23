@@ -1,0 +1,150 @@
+[
+{
+  "model": "testApp.building",
+  "pk": 1,
+  "fields": {
+    "name": "Engineering Building",
+    "campus": "Main Campus",
+    "floor_count": 3
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 2,
+  "fields": {
+    "name": "Library",
+    "campus": "Main Campus",
+    "floor_count": 2
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 3,
+  "fields": {
+    "name": "Science Hall",
+    "campus": "Main Campus",
+    "floor_count": 4
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 4,
+  "fields": {
+    "name": "Student Center",
+    "campus": "Main Campus",
+    "floor_count": 1
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 1,
+  "fields": {
+    "number": "101",
+    "name": "Study Room 101",
+    "building": 1,
+    "floor": "1st Floor",
+    "seating": 5,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 2,
+  "fields": {
+    "number": "102",
+    "name": "Study Room 102",
+    "building": 1,
+    "floor": "1st Floor",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 3,
+  "fields": {
+    "number": "101",
+    "name": "",
+    "building": 2,
+    "floor": "1",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 4,
+  "fields": {
+    "number": "102",
+    "name": "",
+    "building": 2,
+    "floor": "1",
+    "seating": 6,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 5,
+  "fields": {
+    "number": "201",
+    "name": "",
+    "building": 2,
+    "floor": "2",
+    "seating": 10,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 6,
+  "fields": {
+    "number": "110",
+    "name": "",
+    "building": 3,
+    "floor": "1",
+    "seating": 12,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 7,
+  "fields": {
+    "number": "210",
+    "name": "",
+    "building": 3,
+    "floor": "2",
+    "seating": 10,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 8,
+  "fields": {
+    "number": "120",
+    "name": "",
+    "building": 4,
+    "floor": "1",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+}
+]

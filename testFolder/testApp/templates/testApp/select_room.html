@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ building.name }} - Rooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-orange-500 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 text-white flex justify-between items-center">
+
+        <div>
+            <h1 class="text-2xl font-bold">UTRGV</h1>
+            <p class="text-sm opacity-90">Study Room Finder</p>
+        </div>
+
+        <a href="{% url 'home' %}"
+           class="bg-white text-orange-500 px-4 py-2 rounded font-semibold hover:bg-gray-100">
+            Back Home
+        </a>
+
+    </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- TITLE -->
+    <div class="mb-6">
+        <h2 class="text-3xl font-bold text-green-800">
+            {{ building.name }}
+        </h2>
+        <p class="text-gray-600">
+            Select a room to continue
+        </p>
+    </div>
+
+    <!-- ROOM GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {% for room in rooms %}
+
+        <div class="bg-white rounded-xl shadow-md p-6 border hover:shadow-xl transition">
+
+            <!-- ROOM HEADER -->
+            <div class="flex justify-between items-center mb-3">
+
+                <h3 class="text-xl font-bold text-green-700">
+                    Room {{ room.number }}
+                </h3>
+
+                {% if room.available %}
+                    <span class="text-green-600 font-semibold text-sm">
+                        Available
+                    </span>
+                {% else %}
+                    <span class="text-red-500 font-semibold text-sm">
+                        Full
+                    </span>
+                {% endif %}
+
+            </div>
+
+            <!-- INFO -->
+            <p class="text-gray-600">
+                Seats: {{ room.seating }}
+            </p>
+
+            <p class="text-gray-600">
+                Floor: {{ room.floor }}
+            </p>
+
+            <p class="text-gray-600 mt-1">
+                Outlets: {% if room.has_outlets %}Yes{% else %}No{% endif %}
+                | Wi-Fi: {% if room.has_wifi %}Yes{% else %}No{% endif %}
+            </p>
+
+            <!-- BUTTON -->
+            {% if room.available %}
+                <a href="{% url 'time_select' room.id %}"
+                   class="block mt-5 text-center bg-orange-500 text-white py-2 rounded hover:bg-orange-600">
+                    Reserve Room
+                </a>
+            {% else %}
+                <button disabled
+                        class="block mt-5 w-full bg-gray-300 text-gray-500 py-2 rounded cursor-not-allowed">
+                    Not Available
+                </button>
+            {% endif %}
+
+        </div>
+
+        {% empty %}
+            <p>No rooms available.</p>
+        {% endfor %}
+
+    </div>
+
+</main>
+
+</body>
+</html>

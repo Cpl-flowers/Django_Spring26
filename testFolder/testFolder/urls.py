@@ -15,18 +15,31 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.contrib.auth import views as auth_views
+from testApp import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('accounts/login/', auth_views.LoginView.as_view(
+    path('', views.home, name='home'),
+
+    path('login/', auth_views.LoginView.as_view(
         template_name='testApp/login.html'
     ), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('signup/', views.signup_view, name='signup'),
 
-    path('accounts/', include('django.contrib.auth.urls')),
+    # STEP 1 → rooms in building
+    path('building/<int:building_id>/rooms/', views.select_room_view, name='select_rooms'),
 
-    path('', include('testApp.urls')),
+    # STEP 2 → time selection
+    path('room/<int:room_id>/time/', views.time_select_view, name='time_select'),
+
+    path('reserve/<int:room_id>/', views.my_reservations_view, name='reservation_page'),
+
+    path('my-reservations/', views.my_reservations_view, name='my_reservations'),
+
+    
 ]
