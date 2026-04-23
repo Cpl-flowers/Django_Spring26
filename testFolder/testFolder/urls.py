@@ -33,7 +33,7 @@ urlpatterns = [
     # STEP 2 → time selection
     path('room/<int:room_id>/time/', views.time_select_view, name='time_select'),
 
-    path('reserve/<int:room_id>/', views.reservation_page, name='reservation_page'),
+    path('reserve/<int:room_id>/', views.my_reservations_view, name='reservation_page'),
 
     path('my-reservations/', views.my_reservations_view, name='my_reservations'),
 
