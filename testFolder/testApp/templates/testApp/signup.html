@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Study Room Finder</title>
+    <title>Sign Up | Study Room Finder</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-100 text-gray-800">
@@ -23,8 +23,8 @@
 
     <main class="flex min-h-[calc(100vh-104px)] items-center justify-center px-5 py-10">
         <section class="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-            <h2 class="text-3xl font-bold text-green-800">Welcome Back</h2>
-            <p class="mt-2 text-sm text-gray-500">Log in to view and reserve study spaces.</p>
+            <h2 class="text-3xl font-bold text-green-800">Create Account</h2>
+            <p class="mt-2 text-sm text-gray-500">Sign up to reserve study spaces and manage your bookings.</p>
 
             <form method="post" class="mt-7 space-y-5">
                 {% csrf_token %}
@@ -46,38 +46,58 @@
                         required
                         class="w-full rounded-xl border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                     >
+                    {% if form.username.help_text %}
+                        <p class="mt-2 text-xs text-gray-500">{{ form.username.help_text }}</p>
+                    {% endif %}
                     {% if form.username.errors %}
                         <div class="mt-2 text-sm text-red-600">{{ form.username.errors }}</div>
                     {% endif %}
                 </div>
 
                 <div>
-                    <label for="id_password" class="mb-2 block font-semibold text-gray-700">Password</label>
+                    <label for="id_password1" class="mb-2 block font-semibold text-gray-700">Password</label>
                     <input
                         type="password"
-                        name="password"
-                        id="id_password"
-                        autocomplete="current-password"
+                        name="password1"
+                        id="id_password1"
+                        autocomplete="new-password"
                         required
                         class="w-full rounded-xl border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
                     >
-                    {% if form.password.errors %}
-                        <div class="mt-2 text-sm text-red-600">{{ form.password.errors }}</div>
+                    {% if form.password1.help_text %}
+                        <div class="mt-2 text-xs text-gray-500">{{ form.password1.help_text }}</div>
+                    {% endif %}
+                    {% if form.password1.errors %}
+                        <div class="mt-2 text-sm text-red-600">{{ form.password1.errors }}</div>
                     {% endif %}
                 </div>
 
-                {% if next %}
-                    <input type="hidden" name="next" value="{{ next }}">
-                {% endif %}
+                <div>
+                    <label for="id_password2" class="mb-2 block font-semibold text-gray-700">Confirm Password</label>
+                    <input
+                        type="password"
+                        name="password2"
+                        id="id_password2"
+                        autocomplete="new-password"
+                        required
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
+                    >
+                    {% if form.password2.help_text %}
+                        <p class="mt-2 text-xs text-gray-500">{{ form.password2.help_text }}</p>
+                    {% endif %}
+                    {% if form.password2.errors %}
+                        <div class="mt-2 text-sm text-red-600">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
 
                 <button type="submit" class="w-full rounded-xl bg-orange-500 px-4 py-3 font-semibold text-white transition hover:bg-orange-600">
-                    Login
+                    Sign Up
                 </button>
             </form>
 
             <p class="mt-6 text-center text-gray-600">
-                Do not have an account?
-                <a href="{% url 'signup' %}" class="font-semibold text-orange-500 hover:underline">Sign Up</a>
+                Already have an account?
+                <a href="{% url 'login' %}" class="font-semibold text-orange-500 hover:underline">Login</a>
             </p>
         </section>
     </main>
