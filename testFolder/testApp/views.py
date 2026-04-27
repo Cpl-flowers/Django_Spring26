@@ -1,8 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_POST
 from datetime import datetime
 
-from .models import Building, Room, Reservation
+from .models import Building, CheckIn, Room, Reservation
 
 
 # -------------------
@@ -36,6 +39,15 @@ def signup_view(request):
     return render(request, 'testApp/signup.html', {
         'form': form
     })
+
+
+@login_required(login_url="login")
+@require_POST
+def check_in_view(request):
+    CheckIn.objects.create(user=request.user)
+
+    messages.success(request, "You checked in successfully.")
+    return redirect("home")
 
 
 # -------------------

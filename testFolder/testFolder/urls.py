@@ -30,6 +30,7 @@ urlpatterns = [
     ), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/', views.signup_view, name='signup'),
+    path('check-in/', views.check_in_view, name='check_in'),
 
     # STEP 1 → rooms in building
     path('building/<int:building_id>/rooms/', views.select_room_view, name='select_rooms'),
