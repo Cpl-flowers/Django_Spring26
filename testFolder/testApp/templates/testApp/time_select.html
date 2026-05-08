@@ -7,22 +7,41 @@
 
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
 
+<!-- HEADER -->
+<header class="bg-orange-500 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="bg-orange-700 px-6 py-3 rounded-lg shadow-md">
+                <h1 class="text-white text-2xl font-extrabold tracking-wider">UTRGV</h1>
+            </div>
+            <h2 class="text-xl font-semibold text-white">Study Room Finder</h2>
+        </div>
+        <a href="{% url 'home' %}" class="bg-white text-orange-500 px-4 py-2 rounded-lg font-medium hover:bg-gray-100">
+            Back Home
+        </a>
+    </div>
+</header>
+
 <div class="max-w-5xl mx-auto p-6">
 
-    <!-- HEADER -->
+    <!-- TITLE -->
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-green-800">
-            Room {{ room.number }}
-        </h1>
-        <p class="text-gray-600">
-            Select your start and end time
-        </p>
-
+        <h1 class="text-3xl font-bold text-green-800">Room {{ room.number }}</h1>
+        <p class="text-gray-600">{{ room.building.name }} — {{ room.building.campus }}</p>
         {% if error %}
-            <p class="text-red-500 mt-2 font-semibold">
-                {{ error }}
-            </p>
+            <p class="text-red-500 mt-2 font-semibold">{{ error }}</p>
         {% endif %}
+    </div>
+
+    <!-- DATE PICKER -->
+    <div class="bg-white rounded-xl shadow p-4 mb-6">
+        <label class="block text-green-800 font-semibold mb-2">Select Date</label>
+        <input type="date"
+               id="datePicker"
+               value="{{ selected_date|date:'Y-m-d' }}"
+               min="{{ selected_date|date:'Y-m-d' }}"
+               class="border-2 border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-500"
+               onchange="window.location.href='?date=' + this.value"/>
     </div>
 
     <!-- MAIN GRID -->
@@ -31,59 +50,43 @@
         <!-- TIME GRID -->
         <div class="md:col-span-2">
             <div class="bg-white p-4 rounded-xl shadow">
-
+                <p class="text-green-700 font-semibold mb-3">
+                    Showing availability for: {{ selected_date|date:"F j, Y" }}
+                </p>
                 <div class="grid grid-cols-4 gap-3">
-
                     {% for hour in time_slots %}
-
-                        <div
-                            class="time-block border rounded-lg p-4 text-center font-medium transition
-
+                        <div class="time-block border rounded-lg p-4 text-center font-medium transition
                             {% if hour in booked_hours %}
                                 bg-red-200 text-gray-500 cursor-not-allowed opacity-60
                             {% else %}
                                 bg-gray-50 hover:bg-yellow-200 cursor-pointer
-                            {% endif %}
-
-                            "
-                            data-hour="{{ hour }}"
-                        >
+                            {% endif %}"
+                            data-hour="{{ hour }}">
                             {{ hour }}:00
                         </div>
-
                     {% endfor %}
-
                 </div>
-
             </div>
         </div>
 
         <!-- SUMMARY + FORM -->
         <div class="md:col-span-1">
-
             <form method="POST" class="bg-white rounded-xl shadow p-5">
                 {% csrf_token %}
+                <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
 
-                <h2 class="text-lg font-semibold text-green-700 mb-4">
-                    Your Selection
-                </h2>
+                <h2 class="text-lg font-semibold text-green-700 mb-4">Your Selection</h2>
 
-                <p class="text-gray-700">
-                    Start: <span id="startTime">-</span>
-                </p>
+                <p class="text-gray-700">Date: <span class="font-medium">{{ selected_date|date:"M j, Y" }}</span></p>
+                <p class="text-gray-700 mt-2">Start: <span id="startTime">-</span></p>
+                <p class="text-gray-700">End: <span id="endTime">-</span></p>
 
-                <p class="text-gray-700">
-                    End: <span id="endTime">-</span>
-                </p>
-
-                <!-- hidden inputs for backend -->
                 <input type="hidden" name="start_time" id="startInput">
                 <input type="hidden" name="end_time" id="endInput">
 
                 <div class="mt-4 p-3 bg-green-50 rounded-lg">
                     <p class="text-green-800 font-bold">
-                        Duration:
-                        <span id="duration">0</span> hour(s)
+                        Duration: <span id="duration">0</span> hour(s)
                     </p>
                 </div>
 
@@ -91,66 +94,44 @@
                         class="mt-5 w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600">
                     Confirm Reservation
                 </button>
-
             </form>
-
         </div>
 
     </div>
 </div>
 
-<!-- JAVASCRIPT -->
 <script>
 let selected = [];
 const blocks = document.querySelectorAll(".time-block");
 
 blocks.forEach(block => {
-
     block.addEventListener("click", () => {
-
-        // ❌ ignore booked slots
         if (block.classList.contains("cursor-not-allowed")) return;
-
         const hour = parseInt(block.dataset.hour);
-
-        // reset after 2 selections
         if (selected.length === 2) {
             selected = [];
             blocks.forEach(b => b.classList.remove("bg-yellow-200"));
         }
-
         selected.push(hour);
         selected.sort((a,b) => a-b);
-
         updateUI();
         highlight();
     });
 });
 
 function updateUI() {
-    document.getElementById("startTime").innerText =
-        selected[0] !== undefined ? selected[0] + ":00" : "-";
-
-    document.getElementById("endTime").innerText =
-        selected[1] !== undefined ? selected[1] + ":00" : "-";
-
-    document.getElementById("duration").innerText =
-        selected.length === 2 ? (selected[1] - selected[0]) : "0";
-
+    document.getElementById("startTime").innerText = selected[0] !== undefined ? selected[0] + ":00" : "-";
+    document.getElementById("endTime").innerText = selected[1] !== undefined ? selected[1] + ":00" : "-";
+    document.getElementById("duration").innerText = selected.length === 2 ? (selected[1] - selected[0]) : "0";
     document.getElementById("startInput").value = selected[0] || "";
     document.getElementById("endInput").value = selected[1] || "";
 }
 
 function highlight() {
-
-    blocks.forEach(b => {
-        b.classList.remove("bg-yellow-200");
-    });
-
+    blocks.forEach(b => b.classList.remove("bg-yellow-200"));
     if (selected.length === 2) {
         blocks.forEach(b => {
             let h = parseInt(b.dataset.hour);
-
             if (h >= selected[0] && h <= selected[1]) {
                 b.classList.add("bg-yellow-200");
             }

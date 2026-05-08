@@ -100,7 +100,21 @@ def time_select_view(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     time_slots = list(range(8, 18))
 
-    reservations = Reservation.objects.filter(room=room)
+    # Get selected date or default to today
+    selected_date_str = request.GET.get('date', '') or request.POST.get('date', '')
+    if selected_date_str:
+        try:
+            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            selected_date = datetime.now().date()
+    else:
+        selected_date = datetime.now().date()
+
+    # Get booked hours for this room on the selected date
+    reservations = Reservation.objects.filter(
+        room=room,
+        start_time__date=selected_date
+    )
     booked_hours = []
     for r in reservations:
         start = r.start_time.hour
@@ -119,12 +133,12 @@ def time_select_view(request, room_id):
                     "room": room,
                     "time_slots": time_slots,
                     "booked_hours": booked_hours,
+                    "selected_date": selected_date,
                     "error": "That time is already booked!"
                 })
 
-        today = datetime.now().date()
-        start_datetime = datetime.combine(today, datetime.min.time().replace(hour=start_hour))
-        end_datetime = datetime.combine(today, datetime.min.time().replace(hour=end_hour))
+        start_datetime = datetime.combine(selected_date, datetime.min.time().replace(hour=start_hour))
+        end_datetime = datetime.combine(selected_date, datetime.min.time().replace(hour=end_hour))
 
         Reservation.objects.create(
             user=request.user,
@@ -137,13 +151,15 @@ def time_select_view(request, room_id):
         return render(request, "testApp/reservation_success.html", {
             "room": room,
             "start": start_hour,
-            "end": end_hour
+            "end": end_hour,
+            "date": selected_date,
         })
 
     return render(request, "testApp/time_select.html", {
         "room": room,
         "time_slots": time_slots,
-        "booked_hours": booked_hours
+        "booked_hours": booked_hours,
+        "selected_date": selected_date,
     })
 
 # -------------------
