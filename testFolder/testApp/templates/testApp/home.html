@@ -43,36 +43,67 @@
 
     <main class="max-w-7xl mx-auto px-6 py-8">
 
-        <div class="mb-6">
-            <input type="text"
-                   placeholder="Search by campus, building, floor, or room..."
-                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-orange-500"/>
-        </div>
+        <!-- SEARCH + FILTERS FORM -->
+        <form method="GET" action="{% url 'home' %}">
 
-        <div class="mb-6 relative w-64">
-            <label class="block text-green-800 mb-2 font-medium">Select Campus</label>
-            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 cursor-pointer appearance-none">
-                <option>All Campuses</option>
-                <option>Edinburg</option>
-                <option>Harlingen</option>
-                <option>Brownsville</option>
-            </select>
-            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">▼</span>
-        </div>
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <input type="text"
+                       name="search"
+                       value="{{ search }}"
+                       placeholder="Search by campus or building..."
+                       class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-orange-500"/>
+            </div>
 
-        <div class="flex flex-wrap gap-3 mb-8">
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Available Now</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Quiet</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Low Crowd</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Good Wi-Fi</button>
-        </div>
+            <!-- Campus Selector -->
+            <div class="mb-6 relative w-64">
+                <label class="block text-green-800 mb-2 font-medium">Select Campus</label>
+                <select name="campus"
+                        onchange="this.form.submit()"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 cursor-pointer appearance-none">
+                    <option {% if campus == '' %}selected{% endif %}>All Campuses</option>
+                    <option {% if campus == 'Edinburg' %}selected{% endif %}>Edinburg</option>
+                    <option {% if campus == 'Harlingen' %}selected{% endif %}>Harlingen</option>
+                    <option {% if campus == 'Brownsville' %}selected{% endif %}>Brownsville</option>
+                </select>
+                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">▼</span>
+            </div>
+
+            <!-- Quick Filter Buttons -->
+            <div class="flex flex-wrap gap-3 mb-8">
+                <button type="submit" name="available" value="1"
+                        class="px-4 py-2 rounded-lg border-2 {% if request.GET.available %}bg-orange-500 text-white border-orange-500{% else %}border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white{% endif %}">
+                    Available Now
+                </button>
+                <a href="{% url 'home' %}"
+                   class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                    Clear Filters
+                </a>
+            </div>
+
+        </form>
 
         <h3 class="text-2xl text-green-800 font-semibold mb-4">Available Study Spaces</h3>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
             {% for building in buildings %}
                 <div class="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-orange-500 transition p-4">
                     <h4 class="text-xl font-bold text-green-700">{{ building.name }}</h4>
                     <p class="text-gray-600">{{ building.campus }} • {{ building.floor_count }} floors</p>
                     <p class="mt-1 text-gray-400 text-sm">Last updated: 5 min ago</p>
-                    <a href="{% url 'select_rooms' bui
+                    <a href="{% url 'select_rooms' building.id %}"
+                       class="block text-center mt-4 w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+                        Reserve Room
+                    </a>
+                </div>
+            {% empty %}
+                <p class="text-gray-500 col-span-full">No buildings found.</p>
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>

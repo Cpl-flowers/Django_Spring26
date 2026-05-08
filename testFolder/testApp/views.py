@@ -11,8 +11,27 @@ from .models import Building, Room, Reservation, Member
 # -------------------
 def home(request):
     buildings = Building.objects.all()
+
+    # Search
+    search = request.GET.get('search', '')
+    if search:
+        buildings = buildings.filter(name__icontains=search) | buildings.filter(campus__icontains=search)
+
+    # Campus filter
+    campus = request.GET.get('campus', '')
+    if campus and campus != 'All Campuses':
+        buildings = buildings.filter(campus=campus)
+
+    # Available Now filter
+    available = request.GET.get('available', '')
+    if available:
+        buildings = buildings.filter(room__available=True).distinct()
+        
+
     return render(request, 'testApp/home.html', {
-        'buildings': buildings
+        'buildings': buildings,
+        'search': search,
+        'campus': campus,
     })
 
 # -------------------
