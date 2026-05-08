@@ -26,7 +26,7 @@ def home(request):
     available = request.GET.get('available', '')
     if available:
         buildings = buildings.filter(room__available=True).distinct()
-        
+
 
     return render(request, 'testApp/home.html', {
         'buildings': buildings,
@@ -157,3 +157,14 @@ def my_reservations_view(request):
     return render(request, "testApp/my_reservations.html", {
         "reservations": reservations
     })
+
+
+# -------------------
+# CANCEL RESERVATION
+# -------------------
+@login_required(login_url="login")
+def cancel_reservation_view(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id, user=request.user)
+    if request.method == "POST":
+        reservation.delete()
+    return redirect("my_reservations")

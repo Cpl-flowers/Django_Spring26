@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth import views as auth_views
 from testApp import views
 
 urlpatterns = [
@@ -21,4 +20,5 @@ urlpatterns = [
 
     # Reservations
     path('my-reservations/', views.my_reservations_view, name='my_reservations'),
+    path('cancel/<int:reservation_id>/', views.cancel_reservation_view, name='cancel_reservation'),
 ]
