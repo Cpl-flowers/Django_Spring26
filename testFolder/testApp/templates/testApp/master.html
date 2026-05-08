@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Study Room Finder{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-orange-500 shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-orange-700 px-6 py-3 rounded-lg shadow-md">
+                    <h1 class="text-white text-3xl font-extrabold tracking-wider">UTRGV</h1>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-green-800">Study Room Finder</h2>
+                    <p class="text-gray-100 text-sm">Find your perfect study space</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="{% url 'Home' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Home</a>
+                <a href="{% url 'About' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">About</a>
+                <a href="{% url 'Contact' %}" class="text-white font-medium hover:bg-orange-600 px-4 py-2 rounded-lg transition">Contact</a>
+                <a href="{% url 'Login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">Login</a>
+                <a href="{% url 'Signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page content -->
+    {% block content %}{% endblock %}
+
+</body>
+</html>

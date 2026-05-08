@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../test"
+		},
+		{
+			"name": "Django_Spring26",
+			"path": "../test/Django_Spring26"
+		}
+	],
+	"settings": {}
+}

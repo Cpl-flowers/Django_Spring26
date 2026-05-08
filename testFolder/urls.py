@@ -13,15 +13,25 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
+    # use to turn on the virtual enviroment source virt/Scripts/activate
+    
 """
 from django.contrib import admin
+<<<<<<< HEAD:testFolder/testFolder/urls.py
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from testApp import views
+=======
+from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from testFolder.testApp import views
+>>>>>>> origin/Kevin:testFolder/urls.py
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD:testFolder/testFolder/urls.py
 
     path('', views.home, name='home'),
 
@@ -43,3 +53,14 @@ urlpatterns = [
 
     
 ]
+=======
+    path('login/', auth_views.LoginView.as_view(template_name='testApp/login.html'), name='Login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='Logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', views.home, name='Home'),
+    path('about/', views.about, name='About'),
+    path('contact/', views.members, name='Contact'),
+    path('signup/', views.signup_view, name='Signup'),
+    path('details/<int:id>/', views.details, name='Details'),
+]
+>>>>>>> origin/Kevin:testFolder/urls.py

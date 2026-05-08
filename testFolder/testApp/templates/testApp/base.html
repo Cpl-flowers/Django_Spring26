@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Study Room Finder{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'testApp/css/style.css' %}">
+</head>
+<body class="{% block body_class %}auth-page{% endblock %}">
+    {% block page_shell %}
+        <div class="topbar">
+            <div class="brand">
+                <div class="logo-box">UTRGV</div>
+                <div class="brand-text">
+                    <h1>Study Room Finder</h1>
+                    <p>Find your perfect study space</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-wrapper">
+            <div class="auth-card">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

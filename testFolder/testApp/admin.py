@@ -1,10 +1,7 @@
 from django.contrib import admin
-from .models import Room, Reservation
+from .models import Building, Room, Reservation, Member
 
-
-# Register your models here.
-from .models import Building  # make sure this is imported
-
-admin.site.register(Building)  # register it so you can see it in admin
+admin.site.register(Building)
 admin.site.register(Room)
 admin.site.register(Reservation)
+admin.site.register(Member)
