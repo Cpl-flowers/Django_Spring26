@@ -111,6 +111,15 @@
                         class="px-4 py-2 rounded-lg border-2 {% if request.GET.available %}bg-orange-500 text-white border-orange-500{% else %}border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white{% endif %}">
                     Available Now
                 </button>
+                <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                    Quiet
+                </button>
+                <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                    Low Crowd
+                </button>
+                <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                    Good Wi-Fi
+                </button>
                 <a href="{% url 'home' %}"
                    class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
                     Clear Filters
@@ -154,6 +163,15 @@
                             <div class="bg-green-500 h-full rounded-full transition-all" 
                                  style="width: {{ building.availability_percent }}%"></div>
                         </div>
+                    </div>
+                    
+                    <!-- Room Details -->
+                    <div class="space-y-2 text-sm text-gray-600 mb-6">
+                        <p>Room: 101</p>
+                        <p>Quiet Level: Moderate</p>
+                        <p>Seating: 12</p>
+                        <p>Outlets: Yes | Wi-Fi: Yes</p>
+                        <p>Crowd: <span class="font-bold text-green-600">Low</span></p>
                     </div>
                     
                     <p class="text-gray-400 text-xs mb-4">Last updated: 5 min ago</p>
