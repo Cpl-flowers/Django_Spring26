@@ -38,3 +38,17 @@ class Member(models.Model):
     Email = models.CharField(null=True, max_length=255)
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
+
+class CheckIn(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        if self.building:
+            return f"{self.user.username} checked in at {self.building.name}"
+
+        return f"{self.user.username} checked in"

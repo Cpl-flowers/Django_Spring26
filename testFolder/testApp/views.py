@@ -4,9 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib import messages
+from django.views.decorators.http import require_POST
 from datetime import datetime
-from .models import Building, Room, Reservation, Member
-
+from .models import Building, Room, Reservation, Member, CheckIn
 
 def room_is_booked_today(room, date):
     if not room.available:
@@ -20,6 +22,7 @@ def room_is_booked_today(room, date):
         end = r.end_time.hour
         booked_hours.update(range(start, end))
     return len(booked_hours) >= len(time_slots)
+
 
 
 # -------------------
@@ -104,6 +107,15 @@ def signup_view(request):
             return redirect("home")
 
     return render(request, 'testApp/signup.html', {"error": error})
+
+@login_required(login_url="login")
+@require_POST
+def check_in_view(request):
+    CheckIn.objects.create(user=request.user)
+
+    messages.success(request, "You checked in successfully.")
+    return redirect("home")
+
 
 # -------------------
 # ABOUT / CONTACT / MEMBERS
