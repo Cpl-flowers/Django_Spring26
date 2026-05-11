@@ -82,7 +82,31 @@
             </div>
 
             <!-- Quick Filter Buttons -->
-            <div class="flex flex-wrap gap-3 mb-8">
+            <div class="mb-8 flex flex-wrap items-center gap-3">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'check_in' %}" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="px-5 py-2 rounded-lg border-2 border-green-700 bg-green-700 font-semibold text-white hover:bg-white hover:text-green-700">
+                            Check In
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="flex w-full flex-col gap-3 rounded-xl border border-orange-200 bg-orange-50 px-5 py-4 shadow-sm md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <p class="font-semibold text-orange-900">Want to check in?</p>
+                            <p class="text-sm text-orange-800">
+                                Log in first so we can save your check-in to your account.
+                            </p>
+                        </div>
+
+                        <a href="{% url 'login' %}?next={% url 'home' %}"
+                           class="inline-flex items-center justify-center rounded-lg bg-orange-500 px-5 py-2 font-semibold text-white hover:bg-orange-600">
+                            Login to Check In
+                        </a>
+                    </div>
+                {% endif %}
+
                 <button type="submit" name="available" value="1"
                         class="px-4 py-2 rounded-lg border-2 {% if request.GET.available %}bg-orange-500 text-white border-orange-500{% else %}border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white{% endif %}">
                     Available Now
@@ -92,36 +116,7 @@
                     Clear Filters
                 </a>
             </div>
-
-        <!-- Quick Filters -->
-        <div class="mb-8 flex flex-wrap items-center gap-3">
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'check_in' %}">
-                    {% csrf_token %}
-                    <button type="submit"
-                            class="px-5 py-2 rounded-lg border-2 border-green-700 bg-green-700 font-semibold text-white hover:bg-white hover:text-green-700">
-                        Check In
-                    </button>
-                </form>
-            {% else %}
-                <div class="flex w-full flex-col gap-3 rounded-xl border border-orange-200 bg-orange-50 px-5 py-4 shadow-sm md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <p class="font-semibold text-orange-900">Want to check in?</p>
-                        <p class="text-sm text-orange-800">
-                            Log in first so we can save your check-in to your account.
-                        </p>
-                    </div>
-
-                    <a href="{% url 'login' %}?next={% url 'home' %}"
-                       class="inline-flex items-center justify-center rounded-lg bg-orange-500 px-5 py-2 font-semibold text-white hover:bg-orange-600">
-                        Login to Check In
-                    </a>
-                </div>
-            {% endif %}
-
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
-                Available Now
-            </button>
+        </form>
 
         <h3 class="text-2xl text-green-800 font-semibold mb-4">Available Study Spaces</h3>
 
