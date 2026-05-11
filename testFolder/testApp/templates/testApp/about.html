@@ -3,7 +3,61 @@
 {% block title %}About - Study Room Finder{% endblock %}
 
 {% block content %}
-<h1>About Us</h1>
-<p>Welcome to Study Room Finder! We are a community dedicated to finding the perfect study spaces on campus.</p>
-<!-- Add more about content here -->
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-bold text-green-800 mb-8">About Study Room Finder</h1>
+    
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+        <h2 class="text-2xl font-semibold text-orange-500 mb-4">Our Mission</h2>
+        <p class="text-gray-700 text-lg leading-relaxed mb-6">
+            Welcome to Study Room Finder! We are a community dedicated to finding the perfect study spaces on campus. 
+            Our goal is to make it easy for students, faculty, and staff to locate and reserve ideal study rooms.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-orange-600 mb-3">What We Offer</h3>
+            <ul class="text-gray-700 space-y-2">
+                <li class="flex items-start gap-2">
+                    <span class="text-orange-500 font-bold">•</span>
+                    <span>Easy room search and booking system</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-orange-500 font-bold">•</span>
+                    <span>Real-time availability tracking</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-orange-500 font-bold">•</span>
+                    <span>Filter by amenities (WiFi, outlets, seating capacity)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-orange-500 font-bold">•</span>
+                    <span>Manage your reservations easily</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl shadow-md p-6">
+            <h3 class="text-xl font-bold text-green-700 mb-3">Why Choose Us</h3>
+            <ul class="text-gray-700 space-y-2">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-600 font-bold">•</span>
+                    <span>Fast and intuitive interface</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-600 font-bold">•</span>
+                    <span>Available 24/7 for all users</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-600 font-bold">•</span>
+                    <span>Support across all UTRGV campuses</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-600 font-bold">•</span>
+                    <span>Seamless room reservation experience</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

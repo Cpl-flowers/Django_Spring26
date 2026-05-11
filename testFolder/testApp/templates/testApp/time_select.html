@@ -86,8 +86,9 @@
 
                 <div class="mt-4 p-3 bg-green-50 rounded-lg">
                     <p class="text-green-800 font-bold">
-                        Duration: <span id="duration">0</span> hour(s)
+                        Duration: <span id="duration">0</span> hour<span id="plural">s</span>
                     </p>
+                    <p id="durationNote" class="text-xs text-green-600 mt-1 hidden">Select end time after start time</p>
                 </div>
 
                 <button type="submit"
@@ -108,12 +109,22 @@ blocks.forEach(block => {
     block.addEventListener("click", () => {
         if (block.classList.contains("cursor-not-allowed")) return;
         const hour = parseInt(block.dataset.hour);
-        if (selected.length === 2) {
-            selected = [];
-            blocks.forEach(b => b.classList.remove("bg-yellow-200"));
+
+        if (selected.length === 0) {
+            // First selection - start time
+            selected = [hour];
+        } else if (selected.length === 1) {
+            // Second selection - end time (inclusive)
+            if (hour < selected[0]) {
+                selected = [hour]; // Reset to new start time
+            } else {
+                selected = [selected[0], hour];
+            }
+        } else {
+            // Reset selection
+            selected = [hour];
         }
-        selected.push(hour);
-        selected.sort((a,b) => a-b);
+
         updateUI();
         highlight();
     });
@@ -122,17 +133,23 @@ blocks.forEach(block => {
 function updateUI() {
     document.getElementById("startTime").innerText = selected[0] !== undefined ? selected[0] + ":00" : "-";
     document.getElementById("endTime").innerText = selected[1] !== undefined ? selected[1] + ":00" : "-";
-    document.getElementById("duration").innerText = selected.length === 2 ? (selected[1] - selected[0]) : "0";
+    const duration = selected.length === 2 ? (selected[1] - selected[0] + 1) : 0;
+    document.getElementById("duration").innerText = duration;
+    document.getElementById("plural").innerText = duration === 1 ? "" : "s";
+    document.getElementById("durationNote").classList.toggle("hidden", duration > 0);
     document.getElementById("startInput").value = selected[0] || "";
     document.getElementById("endInput").value = selected[1] || "";
 }
 
 function highlight() {
     blocks.forEach(b => b.classList.remove("bg-yellow-200"));
-    if (selected.length === 2) {
+    if (selected.length >= 1) {
         blocks.forEach(b => {
             let h = parseInt(b.dataset.hour);
-            if (h >= selected[0] && h <= selected[1]) {
+            if (h === selected[0]) {
+                b.classList.add("bg-yellow-200");
+            }
+            if (selected.length === 2 && h >= selected[0] && h <= selected[1]) {
                 b.classList.add("bg-yellow-200");
             }
         });

@@ -1,18 +1,20 @@
 from django.contrib import admin
 from django.urls import path
-from testApp import views
+from testFolder.testApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Auth
     path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
 
     # Main pages
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('contact/details/<int:id>/', views.details, name='details'),
 
     # Room booking flow
     path('building/<int:building_id>/rooms/', views.select_room_view, name='select_rooms'),

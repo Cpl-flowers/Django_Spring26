@@ -36,6 +36,11 @@
         <p class="text-gray-600">
             Select a room to continue
         </p>
+        {% if error %}
+            <div class="mt-4 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3">
+                {{ error }}
+            </div>
+        {% endif %}
     </div>
 
     <!-- ROOM GRID -->
@@ -52,13 +57,17 @@
                     Room {{ room.number }}
                 </h3>
 
-                {% if room.available %}
+                {% if room.booked_today %}
+                    <span class="text-red-500 font-semibold text-sm">
+                        Booked
+                    </span>
+                {% elif room.available %}
                     <span class="text-green-600 font-semibold text-sm">
                         Available
                     </span>
                 {% else %}
                     <span class="text-red-500 font-semibold text-sm">
-                        Full
+                        Booked
                     </span>
                 {% endif %}
 
@@ -79,7 +88,12 @@
             </p>
 
             <!-- BUTTON -->
-            {% if room.available %}
+            {% if room.booked_today %}
+                <button disabled
+                        class="block mt-5 w-full bg-gray-300 text-gray-500 py-2 rounded cursor-not-allowed">
+                    Booked
+                </button>
+            {% elif room.available %}
                 <a href="{% url 'time_select' room.id %}"
                    class="block mt-5 text-center bg-orange-500 text-white py-2 rounded hover:bg-orange-600">
                     Reserve Room
@@ -87,7 +101,7 @@
             {% else %}
                 <button disabled
                         class="block mt-5 w-full bg-gray-300 text-gray-500 py-2 rounded cursor-not-allowed">
-                    Not Available
+                    Booked
                 </button>
             {% endif %}
 
