@@ -1,6 +1,6 @@
 # Django_Spring26
 UTRGV Software Engineering Spring 2026 
-by Arly Garcia, Angle Rizo, Kevin Flores
+by Arly Garcia(arlygarcia0), Angel Rizo(Scrub0728), Kevin Flores(Cpl-Flowers)
 
 
 Project Overview
