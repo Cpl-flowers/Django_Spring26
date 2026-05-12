@@ -1,5 +1,23 @@
 [
 {
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$fixtureuser$5OT0tEjb/LVAtjYRdcV8/1G4LS+GOZaeYq9N00BlHd8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "testuser",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-05-12T00:00:00Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
   "model": "testApp.building",
   "pk": 1,
   "fields": {
