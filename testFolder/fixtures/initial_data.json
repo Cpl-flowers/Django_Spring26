@@ -1,0 +1,231 @@
+[
+{
+  "model": "testApp.building",
+  "pk": 1,
+  "fields": {
+    "name": "Engineering Building",
+    "campus": "Main Campus",
+    "floor_count": 3
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 2,
+  "fields": {
+    "name": "Library",
+    "campus": "Main Campus",
+    "floor_count": 2
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 3,
+  "fields": {
+    "name": "Science Hall",
+    "campus": "Main Campus",
+    "floor_count": 4
+  }
+},
+{
+  "model": "testApp.building",
+  "pk": 4,
+  "fields": {
+    "name": "Student Center",
+    "campus": "Main Campus",
+    "floor_count": 1
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 1,
+  "fields": {
+    "number": "101",
+    "name": "Study Room 101",
+    "building": 1,
+    "floor": "1st Floor",
+    "seating": 5,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 2,
+  "fields": {
+    "number": "102",
+    "name": "Study Room 102",
+    "building": 1,
+    "floor": "1st Floor",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 3,
+  "fields": {
+    "number": "101",
+    "name": "",
+    "building": 2,
+    "floor": "1",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 4,
+  "fields": {
+    "number": "102",
+    "name": "",
+    "building": 2,
+    "floor": "1",
+    "seating": 6,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 5,
+  "fields": {
+    "number": "201",
+    "name": "",
+    "building": 2,
+    "floor": "2",
+    "seating": 10,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 6,
+  "fields": {
+    "number": "110",
+    "name": "",
+    "building": 3,
+    "floor": "1",
+    "seating": 12,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 7,
+  "fields": {
+    "number": "210",
+    "name": "",
+    "building": 3,
+    "floor": "2",
+    "seating": 10,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.room",
+  "pk": 8,
+  "fields": {
+    "number": "120",
+    "name": "",
+    "building": 4,
+    "floor": "1",
+    "seating": 8,
+    "has_outlets": true,
+    "has_wifi": true,
+    "available": true
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "room": 1,
+    "student_id": "test123",
+    "start_time": "2026-05-11T08:00:00Z",
+    "end_time": "2026-05-11T14:00:00Z",
+    "created_at": "2026-05-12T00:07:33.296Z"
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "room": 1,
+    "student_id": "test123",
+    "start_time": "2026-05-11T14:00:00Z",
+    "end_time": "2026-05-11T18:00:00Z",
+    "created_at": "2026-05-12T00:07:41.548Z"
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "room": 2,
+    "student_id": "test123",
+    "start_time": "2026-05-11T08:00:00Z",
+    "end_time": "2026-05-11T14:00:00Z",
+    "created_at": "2026-05-12T00:12:37.074Z"
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 4,
+  "fields": {
+    "user": 1,
+    "room": 2,
+    "student_id": "test123",
+    "start_time": "2026-05-26T08:00:00Z",
+    "end_time": "2026-05-26T14:00:00Z",
+    "created_at": "2026-05-12T00:14:56.961Z"
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 5,
+  "fields": {
+    "user": 1,
+    "room": 3,
+    "student_id": "test123",
+    "start_time": "2026-05-12T08:00:00Z",
+    "end_time": "2026-05-12T14:00:00Z",
+    "created_at": "2026-05-12T00:15:41.500Z"
+  }
+},
+{
+  "model": "testApp.reservation",
+  "pk": 6,
+  "fields": {
+    "user": 1,
+    "room": 3,
+    "student_id": "test123",
+    "start_time": "2026-05-12T14:00:00Z",
+    "end_time": "2026-05-12T18:00:00Z",
+    "created_at": "2026-05-12T00:15:52.228Z"
+  }
+},
+{
+  "model": "testApp.checkin",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "building": null,
+    "created_at": "2026-05-12T00:15:19.909Z"
+  }
+}
+]

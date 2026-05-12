@@ -7,7 +7,6 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-    <!-- Header -->
     <header class="bg-orange-500 shadow-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
@@ -19,60 +18,172 @@
                     <p class="text-gray-100 text-sm">Find your perfect study space</p>
                 </div>
             </div>
-            <div>
-                <a href="{% url 'login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">Login</a>
-                <a href="{% url 'signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500 ml-2">Sign Up</a>
+            <div class="flex items-center gap-3">
+                {% if user.is_authenticated %}
+                    <span class="text-white font-semibold">Hi, {{ user.username }}</span>
+                    <a href="{% url 'my_reservations' %}" class="px-4 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">
+                        My Reservations
+                    </a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="px-4 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="px-6 py-2 bg-white text-orange-500 rounded-lg font-medium hover:bg-gray-100">
+                        Login
+                    </a>
+                    <a href="{% url 'signup' %}" class="px-6 py-2 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-orange-500">
+                        Create Account
+                    </a>
+                {% endif %}
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-6 py-8">
+        {% if messages %}
+            <div class="mb-6 space-y-3">
+                {% for message in messages %}
+                    <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-800 shadow-sm">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <!-- Search Bar -->
-        <div class="mb-6">
-            <input type="text" placeholder="Search by campus, building, floor, or room..."
-                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-orange-500"/>
+        <form method="GET" action="{% url 'home' %}">
+            <div class="mb-6">
+                <input type="text"
+                       name="search"
+                       value="{{ search }}"
+                       placeholder="Search by campus or building..."
+                       class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-orange-500"/>
+            </div>
+
+            <div class="mb-6 relative w-64">
+                <label class="block text-green-800 mb-2 font-medium">Select Campus</label>
+                <select name="campus"
+                        onchange="this.form.submit()"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 cursor-pointer appearance-none">
+                    <option {% if campus == '' %}selected{% endif %}>All Campuses</option>
+                    <option {% if campus == 'Edinburg' %}selected{% endif %}>Edinburg</option>
+                    <option {% if campus == 'Harlingen' %}selected{% endif %}>Harlingen</option>
+                    <option {% if campus == 'Brownsville' %}selected{% endif %}>Brownsville</option>
+                </select>
+                <span class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">v</span>
+            </div>
+
+        </form>
+
+        <div class="mb-8 flex flex-wrap items-center gap-3">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'check_in' %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="px-5 py-2 rounded-lg border-2 border-green-700 bg-green-700 font-semibold text-white hover:bg-white hover:text-green-700">
+                        Check In
+                    </button>
+                </form>
+            {% else %}
+                <div class="flex w-full flex-col gap-3 rounded-xl border border-orange-200 bg-orange-50 px-5 py-4 shadow-sm md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p class="font-semibold text-orange-900">Want to check in?</p>
+                        <p class="text-sm text-orange-800">
+                            Log in first so we can save your check-in to your account.
+                        </p>
+                    </div>
+                    <a href="{% url 'login' %}?next={% url 'home' %}"
+                       class="inline-flex items-center justify-center rounded-lg bg-orange-500 px-5 py-2 font-semibold text-white hover:bg-orange-600">
+                        Login to Check In
+                    </a>
+                </div>
+            {% endif %}
+
+            <form method="GET" action="{% url 'home' %}" class="flex flex-wrap gap-3">
+                <input type="hidden" name="search" value="{{ search }}">
+                <input type="hidden" name="campus" value="{{ campus }}">
+                <button type="submit" name="available" value="1"
+                        class="px-4 py-2 rounded-lg border-2 {% if request.GET.available %}bg-orange-500 text-white border-orange-500{% else %}border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white{% endif %}">
+                    Available Now
+                </button>
+                <a href="{% url 'home' %}"
+                   class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                    Clear Filters
+                </a>
+            </form>
+
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                Quiet
+            </button>
+
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                Low Crowd
+            </button>
+
+            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">
+                Good Wi-Fi
+            </button>
         </div>
 
-        <!-- Campus Selector -->
-        <div class="mb-6 relative w-64">
-            <label class="block text-green-800 mb-2 font-medium">Select Campus</label>
-            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 cursor-pointer appearance-none">
-                <option>All Campuses</option>
-                <option>Edinburg</option>
-                <option>Harlingen</option>
-                <option>Brownsville</option>
-            </select>
-            <span class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">▼</span>
-        </div>
-
-        <!-- Quick Filters -->
-        <div class="flex flex-wrap gap-3 mb-8">
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Available Now</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Quiet</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Low Crowd</button>
-            <button class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white">Good Wi-Fi</button>
-        </div>
-
-        <!-- Study Rooms Grid -->
         <h3 class="text-2xl text-green-800 font-semibold mb-4">Available Study Spaces</h3>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for building in buildings %}
-                <div class="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-orange-500 transition p-4">
-                    <h4 class="text-xl font-bold text-green-700">{{ building.name }}</h4>
-                    <p class="text-gray-600">{{ building.campus }} • {{ building.floor_count }} floors</p>
-                    <!-- Placeholder for extra info -->
-                    <p class="mt-2 text-gray-500">Room: 101</p>
-                    <p class="mt-1 text-gray-500">Quiet Level: Moderate</p>
-                    <p class="mt-1 text-gray-500">Seating: 12</p>
-                    <p class="mt-1 text-gray-500">Outlets: Yes | Wi-Fi: Yes</p>
-                    <p class="mt-1 text-gray-500">Crowd: <span class="font-bold text-green-500">Low</span></p>
-                    <p class="mt-1 text-gray-400 text-sm">Last updated: 5 min ago</p>
-                    <button class="mt-4 w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Reserve Room</button>
+                <div class="bg-white rounded-xl shadow-md border-2 border-transparent hover:border-orange-500 transition p-6 flex flex-col">
+                    <h4 class="text-xl font-bold text-green-700 mb-2">{{ building.name }}</h4>
+                    <p class="text-gray-600 text-sm mb-4">{{ building.campus }} - {{ building.floor_count }} floors</p>
+
+                    <div class="mb-5 space-y-1 text-sm text-gray-500">
+                        <p>Room: 101</p>
+                        <p>Quiet Level: Moderate</p>
+                        <p>Seating: 12</p>
+                        <p>Outlets: Yes | Wi-Fi: Yes</p>
+                        <p>
+                            Crowd:
+                            <span class="font-bold text-green-500">Low</span>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                            <p class="text-green-600 font-semibold text-sm">Available</p>
+                            <p class="text-3xl font-bold text-green-700">{{ building.available_rooms }}</p>
+                            <p class="text-xs text-green-600 mt-1">rooms free</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border border-red-200">
+                            <p class="text-red-600 font-semibold text-sm">Booked</p>
+                            <p class="text-3xl font-bold text-red-700">{{ building.unavailable_rooms }}</p>
+                            <p class="text-xs text-red-600 mt-1">reserved</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-semibold text-gray-600">Total Rooms: {{ building.total_rooms }}</span>
+                            <span class="text-xs font-semibold text-green-700">{{ building.availability_percent }}% available</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                            <div class="bg-green-500 h-full rounded-full transition-all" style="width: {{ building.availability_percent }}%"></div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 text-xs mb-4">Last updated: 5 min ago</p>
+                    {% if building.available_rooms > 0 %}
+                        <a href="{% url 'select_rooms' building.id %}"
+                           class="block text-center w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition font-medium mt-auto">
+                            Reserve Room
+                        </a>
+                    {% else %}
+                        <button disabled
+                                class="block w-full py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed font-medium mt-auto">
+                            Fully Booked Today
+                        </button>
+                    {% endif %}
                 </div>
             {% empty %}
-                <p class="text-gray-500 col-span-full">No buildings added yet.</p>
+                <p class="text-gray-500 col-span-full text-center py-8">No buildings found.</p>
             {% endfor %}
         </div>
     </main>
